@@ -203,6 +203,106 @@ public class CameraActivity extends AppCompatActivity {
     // ─── UI update ──────────────────────────────────────────────────────────────
 
     private void parseAndDisplay(JSONObject obj, int imageW, int imageH) {
+        // Handle new response format with multiple faces
+        if (obj.has("faces")) {
+            try {
+                org.json.JSONArray facesArray = obj.getJSONArray("faces");
+                
+                if (facesArray.length() == 0) {
+                    runOnUiThread(() -> {
+                        tvEmojiLabel.setText("👤  No face detected");
+                        tvConfidence.setText("");
+                        progressConfidence.setProgress(0);
+                        tvBreakdown.setText("");
+                        cameraOverlay.clear();
+                    });
+                    return;
+                }
+
+                // Build display text for all faces
+                StringBuilder displayText = new StringBuilder();
+                StringBuilder breakdownText = new StringBuilder();
+                java.util.List<android.graphics.RectF> faceBoxes = new java.util.ArrayList<>();
+
+                for (int i = 0; i < facesArray.length(); i++) {
+                    JSONObject face = facesArray.getJSONObject(i);
+                    String emotion = face.optString("emotion", "unknown");
+                    double confidence = face.optDouble("confidence", 0.0);
+                    JSONObject faceBox = face.optJSONObject("face_box");
+                    JSONObject allEmotions = face.optJSONObject("all_emotions");
+
+                    String emoji = EMOTION_EMOJI.getOrDefault(emotion, "🤔");
+                    int pct = (int) Math.round(confidence * 100);
+
+                    displayText.append(emoji).append(" ").append(capitalize(emotion));
+                    if (i < facesArray.length() - 1) {
+                        displayText.append(" | ");
+                    }
+
+                    // Build per-emotion breakdown for this face
+                    if (allEmotions != null) {
+                        breakdownText.append(String.format("Face %d:\n", i + 1));
+                        for (String key : EMOTION_EMOJI.keySet()) {
+                            double val = allEmotions.optDouble(key, 0.0);
+                            int emotionPct = (int) Math.round(val * 100);
+                            int bars = emotionPct / 10;
+                            String bar = "█".repeat(bars) + "░".repeat(10 - bars);
+                            String emotionEmoji = EMOTION_EMOJI.getOrDefault(key, "");
+                            breakdownText.append(String.format("%s %-9s %s %3d%%\n",
+                                    emotionEmoji, key, bar, emotionPct));
+                        }
+                        breakdownText.append("\n");
+                    }
+
+                    // Collect face boxes
+                    if (faceBox != null) {
+                        faceBoxes.add(new android.graphics.RectF(
+                                faceBox.optInt("x"),
+                                faceBox.optInt("y"),
+                                faceBox.optInt("x") + faceBox.optInt("w"),
+                                faceBox.optInt("y") + faceBox.optInt("h")
+                        ));
+                    }
+                }
+
+                String finalDisplayText = displayText.toString();
+                String finalBreakdown = breakdownText.toString().trim();
+
+                // Extract first face confidence outside runOnUiThread to handle JSONException
+                int firstPct = 0;
+                try {
+                    JSONObject firstFace = facesArray.getJSONObject(0);
+                    double firstConfidence = firstFace.optDouble("confidence", 0.0);
+                    firstPct = (int) Math.round(firstConfidence * 100);
+                } catch (org.json.JSONException e) {
+                    firstPct = 0;
+                }
+                final int finalFirstPct = firstPct;
+
+                runOnUiThread(() -> {
+                    tvEmojiLabel.setText(finalDisplayText);
+                    
+                    // Show confidence of first face (or average if preferred)
+                    tvConfidence.setText(facesArray.length() > 1 
+                            ? finalFirstPct + "% (" + facesArray.length() + " faces)" 
+                            : finalFirstPct + "%");
+                    progressConfidence.setProgress(finalFirstPct);
+                    tvBreakdown.setText(finalBreakdown);
+
+                    if (!faceBoxes.isEmpty()) {
+                        cameraOverlay.setFaceBoxesInImage(faceBoxes, imageW, imageH);
+                    } else {
+                        cameraOverlay.clear();
+                    }
+                });
+
+            } catch (Exception e) {
+                runOnUiThread(() -> tvEmojiLabel.setText("Error parsing response"));
+            }
+            return;
+        }
+
+        // Legacy single-face format (for backward compatibility)
         String emotion    = obj.optString("emotion", "unknown");
         double confidence = obj.optDouble("confidence", 0.0);
         JSONObject faceBox = obj.optJSONObject("face_box");

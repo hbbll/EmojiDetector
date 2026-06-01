@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emotion Detector</title>
+  <title>Emotsiya Detektori</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 
 <body>
 
   <div class="container">
-    <div>
-      <h1>Emotion Detection System</h1>
+    <h1>Emotsiya Aniqlash Tizimi</h1>
 
-      <p class="hint">
-        Tip: paste an image here with <kbd>Ctrl</kbd>+<kbd>V</kbd> (or <kbd>⌘</kbd>+<kbd>V</kbd>), or pick a file.
-      </p>
+    <div class="grid-menu">
+      <a href="/image" class="grid-card">
+        <div class="card-icon">🖼</div>
+        <div class="card-title">Rasm</div>
+      </a>
 
-      <input type="file" id="imageInput" accept="image/*">
+      <a href="/video" class="grid-card">
+        <div class="card-icon">🎥</div>
+        <div class="card-title">Video</div>
+      </a>
 
-      <button onclick="uploadImage()">
-        Detect Emotion
-      </button>
+      <a href="/camera" class="grid-card">
+        <div class="card-icon">📷</div>
+        <div class="card-title">Kamera</div>
+      </a>
 
-      <div class="preview">
-        <img id="preview" />
-      </div>
-    </div>
-    <div>
-      <div id="result"></div>
+      <a href="/info" class="grid-card">
+        <div class="card-icon">ℹ️</div>
+        <div class="card-title">Ma'lumot</div>
+      </a>
     </div>
   </div>
-
-  <script src="/static/app.js"></script>
 </body>
 
 </html>

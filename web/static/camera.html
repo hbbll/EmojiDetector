@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamera orqali aniqlash - Emotsiya Detektori</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Kamera orqali aniqlash</h1>
+
+    <div class="back-link">
+      <a href="/">← Menyuga qaytish</a>
+    </div>
+
+    <div class="section">
+      <p class="hint">Veb-kamerangizdan foydalanib, emotsiyalarni real vaqtda aniqlang.</p>
+
+      <button onclick="startWebcam()">
+        Kamerni boshlash
+      </button>
+
+      <button onclick="stopWebcam()">
+        Kamerni to'xtatish
+      </button>
+
+      <button onclick="toggleFullscreen()">
+        To'liq ekran
+      </button>
+
+      <div class="preview">
+        <div class="video-container">
+          <video id="webcamVideo" autoplay playsinline></video>
+          <canvas id="webcamCanvas"></canvas>
+          <div id="webcamPopup" class="face-popup"></div>
+        </div>
+      </div>
+      <div id="webcamResult"></div>
+    </div>
+  </div>
+
+  <script src="/static/utility.js"></script>
+  <script src="/static/canvas.js"></script>
+  <script src="/static/webcam-detection.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+
+</html>

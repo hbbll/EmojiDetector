@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView cameraCard =
                 findViewById(R.id.cameraCard);
 
+        MaterialCardView infoCard =
+            findViewById(R.id.infoCard);
+
         imageCard.setOnClickListener(v -> {
 
             Intent intent = new Intent(this, ImageActivity.class);
@@ -43,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent =
                     new Intent(this, CameraActivity.class);
+
+            startActivity(intent);
+        });
+
+        infoCard.setOnClickListener(v -> {
+
+            Intent intent =
+                new Intent(this, InfoActivity.class);
 
             startActivity(intent);
         });

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -69,11 +70,11 @@ public class ImageActivity extends AppCompatActivity {
         resultText = findViewById(R.id.resultText);
         resultText.setText("Pick an image, then tap Detect Emotion.");
 
-        MaterialButton pickImageButton = findViewById(R.id.pickImageButton);
+        Button pickImageButton = findViewById(R.id.pickImageButton);
         pickImageButton.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
 
-        MaterialButton clearButton = findViewById(R.id.clearButton);
-        clearButton.setOnClickListener(v -> drawingOverlay.clear());
+//        MaterialButton clearButton = findViewById(R.id.clearButton);
+//        clearButton.setOnClickListener(v -> drawingOverlay.clear());
 
         detectButton.setOnClickListener(v -> {
             if (selectedImageUri == null) {

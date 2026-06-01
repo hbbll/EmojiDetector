@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rasm orqali aniqlash - Emotsiya Detektori</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Rasm orqali aniqlash</h1>
+
+    <div class="back-link">
+      <a href="/">← Menyuga qaytish</a>
+    </div>
+
+    <div class="section">
+      <p class="hint">
+        Maslahat: rasmni shu yerga <kbd>Ctrl</kbd>+<kbd>V</kbd> (yoki <kbd>⌘</kbd>+<kbd>V</kbd>) bilan joylashtiring,
+        yoki faylni tanlang.
+      </p>
+
+      <input type="file" id="imageInput" accept="image/*">
+
+      <button onclick="uploadImage()">
+        Emotsiyani aniqlash
+      </button>
+
+      <div class="preview">
+        <div class="image-container">
+          <img id="preview" />
+          <canvas id="faceCanvas"></canvas>
+          <div id="facePopup" class="face-popup"></div>
+        </div>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <script src="/static/utility.js"></script>
+  <script src="/static/canvas.js"></script>
+  <script src="/static/image-detection.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+
+</html>

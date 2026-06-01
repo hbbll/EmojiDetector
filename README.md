@@ -1,6 +1,6 @@
 # EmotionDetector
 
-Bu loyiha rasm (va video) orqali yuz ifodasidan **emotion (kayfiyat/emosiya)** aniqlash uchun mo‘ljallangan.
+Bu loyiha rasm (va video) orqali yuz ifodasidan **emotion (kayfiyat/emotsiya)** aniqlash uchun mo‘ljallangan.
 
 Repo ichida 2 ta asosiy qism bor:
 
@@ -96,7 +96,7 @@ Android ilova:
 
 - Rasm tanlaydi
 - `POST /api/v1/detect/image` ga yuboradi
-- Natijani (emoji + confidence + barcha emosiyalar) ko‘rsatadi
+- Natijani (emoji + confidence + barcha emotsiyalar) ko‘rsatadi
 - Backend qaytargan `face_box` bo‘yicha preview ustiga **to‘rtburchak** chizadi
 
 Muhim:

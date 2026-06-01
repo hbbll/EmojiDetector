@@ -9,9 +9,12 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DrawingOverlayView extends View {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private @Nullable RectF faceRectInImage;
+    private List<RectF> faceRectsInImage = new ArrayList<>();
     private int imageWidth;
     private int imageHeight;
 
@@ -39,12 +42,20 @@ public class DrawingOverlayView extends View {
     public void setFaceBoxInImage(int x, int y, int w, int h, int imgW, int imgH) {
         imageWidth = imgW;
         imageHeight = imgH;
-        faceRectInImage = new RectF(x, y, x + w, y + h);
+        faceRectsInImage.clear();
+        faceRectsInImage.add(new RectF(x, y, x + w, y + h));
+        invalidate();
+    }
+
+    public void setFaceBoxesInImage(List<RectF> rects, int imgW, int imgH) {
+        imageWidth = imgW;
+        imageHeight = imgH;
+        faceRectsInImage = new ArrayList<>(rects);
         invalidate();
     }
 
     public void clear() {
-        faceRectInImage = null;
+        faceRectsInImage.clear();
         imageWidth = 0;
         imageHeight = 0;
         invalidate();
@@ -53,21 +64,22 @@ public class DrawingOverlayView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (faceRectInImage != null && imageWidth > 0 && imageHeight > 0) {
+        if (!faceRectsInImage.isEmpty() && imageWidth > 0 && imageHeight > 0) {
             float viewW = getWidth();
             float viewH = getHeight();
             float scale = Math.min(viewW / imageWidth, viewH / imageHeight);
             float dx = (viewW - imageWidth * scale) / 2f;
             float dy = (viewH - imageHeight * scale) / 2f;
 
-            RectF mapped = new RectF(
-                    dx + faceRectInImage.left * scale,
-                    dy + faceRectInImage.top * scale,
-                    dx + faceRectInImage.right * scale,
-                    dy + faceRectInImage.bottom * scale
-            );
-
-            canvas.drawRect(mapped, paint);
+            for (RectF faceRectInImage : faceRectsInImage) {
+                RectF mapped = new RectF(
+                        dx + faceRectInImage.left * scale,
+                        dy + faceRectInImage.top * scale,
+                        dx + faceRectInImage.right * scale,
+                        dy + faceRectInImage.bottom * scale
+                );
+                canvas.drawRect(mapped, paint);
+            }
         }
     }
 }

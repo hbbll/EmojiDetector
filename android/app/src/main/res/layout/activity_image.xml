@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
     tools:context=".ImageActivity">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/closeButton"
+    <!-- TOP BUTTONS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pickImageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:text="Pick Image" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detectButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:text="Detect Emotion" />
+
+    </LinearLayout>
+
+    <!-- PROGRESS -->
+    <ProgressBar
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:visibility="gone" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/pickImageButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Pick Image"
-        app:layout_constraintTop_toBottomOf="@id/closeButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
-
+    <!-- IMAGE PREVIEW -->
     <FrameLayout
         android:id="@+id/previewContainer"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/pickImageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:background="@android:color/darker_gray">
 
         <ImageView
             android:id="@+id/previewImage"
@@ -51,48 +64,14 @@
 
     </FrameLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/clearButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        app:layout_constraintTop_toBottomOf="@id/previewContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/detectButton"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/detectButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Detect Emotion"
-        app:layout_constraintTop_toBottomOf="@id/previewContainer"
-        app:layout_constraintStart_toEndOf="@id/clearButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="8dp" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/detectButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
-
+    <!-- RESULTS -->
     <ScrollView
         android:id="@+id/resultScroll"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/progress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="12dp">
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:fillViewport="true">
 
         <TextView
             android:id="@+id/resultText"
@@ -106,4 +85,4 @@
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
