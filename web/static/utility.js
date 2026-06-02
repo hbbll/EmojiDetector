@@ -13,19 +13,6 @@ function getEmotionEmoji(emotion) {
   return emojis[emotion] || emotion;
 }
 
-function getEmotionTranslation(emotion) {
-  const translations = {
-    "happy": "Xursand",
-    "sad": "G'amgin",
-    "angry": "G'azablangan",
-    "surprise": "Hayron",
-    "fear": "Qo'rqqan",
-    "neutral": "Neytral",
-    "disgust": "Nafratlangan"
-  };
-  return translations[emotion] || capitalize(emotion);
-}
-
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

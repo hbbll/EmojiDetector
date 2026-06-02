@@ -128,7 +128,7 @@ async function detectCurrentFrame() {
         drawVideoFaceRectangles(data.faces);
 
         if (data.faces.length > 0) {
-          const emotions = data.faces.map(f => `${getEmotionEmoji(f.emotion)} ${getEmotionTranslation(f.emotion)}`).join(", ");
+          const emotions = data.faces.map(f => `${getEmotionEmoji(f.emotion)} ${capitalize(f.emotion)}`).join(", ");
           resultEl.innerHTML = `<h3>Aniqlangan: ${emotions}</h3>`;
         } else {
           resultEl.innerHTML = `<p>${formatTime(video.currentTime)} da hech qanday yuz aniqlanmadi</p>`;
@@ -180,7 +180,7 @@ async function uploadVideo() {
       html += `<p>Kadr ${result.frame_number} (${result.timestamp_at}s): `;
       result.faces.forEach(face => {
         const emotionEmoji = getEmotionEmoji(face.emotion);
-        html += `${emotionEmoji} ${getEmotionTranslation(face.emotion)} (${(face.confidence * 100).toFixed(1)}%) `;
+        html += `${emotionEmoji} ${capitalize(face.emotion)} (${(face.confidence * 100).toFixed(1)}%) `;
       });
       html += `</p>`;
     }

@@ -58,7 +58,7 @@ async function uploadImage() {
           <div class="face-card-content">
             ${faceImageSrc ? `<div class="face-crop"><img src="${faceImageSrc}" alt="Face ${index + 1}" /></div>` : ''}
             <div class="face-info">
-              <h3>${emotionEmoji} ${getEmotionTranslation(face.emotion)}</h3>
+              <h3>${emotionEmoji} ${capitalize(face.emotion)}</h3>
               <p>Ishonch: ${(face.confidence * 100).toFixed(1)}%</p>
               <ul>
       `;
@@ -66,7 +66,7 @@ async function uploadImage() {
       for (const [emotion, value] of Object.entries(face.all_emotions)) {
         const percentage = (value * 100).toFixed(1);
         const colorClass = getPercentageColor(parseFloat(percentage));
-        html += `<li><span>${getEmotionTranslation(emotion)}</span><span class="${colorClass}">${percentage}%</span></li>`;
+        html += `<li><span>${emotion}</span><span class="${colorClass}">${percentage}%</span></li>`;
       }
 
       html += `</ul></div></div></div>`;
