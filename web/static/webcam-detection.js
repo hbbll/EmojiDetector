@@ -92,9 +92,29 @@ async function detectWebcamFrame(videoEl, canvas, resultEl) {
         // Draw face rectangles on canvas
         drawWebcamFaceRectangles(data.faces, videoEl, canvas);
 
-        // Update result text
-        const emotions = data.faces.map(f => `${getEmotionEmoji(f.emotion)} ${capitalize(f.emotion)}`).join(", ");
-        resultEl.textContent = `Aniqlangan: ${emotions}`;
+        // Display detailed results
+        let html = `<h2>${data.faces.length} ta yuz aniqlandi</h2>`;
+
+        data.faces.forEach((face, index) => {
+          const emotionEmoji = getEmotionEmoji(face.emotion);
+          html += `
+            <div class="face-result">
+              <div class="face-info">
+                <h3>${emotionEmoji} ${getEmotionTranslation(face.emotion)}</h3>
+                <p>Ishonch: ${(face.confidence * 100).toFixed(1)}%</p>
+                <ul>
+          `;
+
+          for (const [emotion, value] of Object.entries(face.all_emotions)) {
+            const percentage = (value * 100).toFixed(1);
+            const colorClass = getPercentageColor(parseFloat(percentage));
+            html += `<li><span>${getEmotionTranslation(emotion)}</span><span class="${colorClass}">${percentage}%</span></li>`;
+          }
+
+          html += `</ul></div></div>`;
+        });
+
+        resultEl.innerHTML = html;
       } else {
         // Clear canvas if no faces
         const ctx = canvas.getContext("2d");

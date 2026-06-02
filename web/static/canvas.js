@@ -75,7 +75,7 @@ function drawFaceRectangles(faces) {
       const emotionEmoji = getEmotionEmoji(face.emotion);
       ctx.fillStyle = "#4CAF50";
       ctx.font = "bold 16px Arial";
-      ctx.fillText(`${emotionEmoji} ${capitalize(face.emotion)}`, scaledX, scaledY - 8);
+      ctx.fillText(`${emotionEmoji} ${getEmotionTranslation(face.emotion)}`, scaledX, scaledY - 8);
     }
   });
 
@@ -153,7 +153,7 @@ function drawVideoFaceRectangles(faces) {
       const emotionEmoji = getEmotionEmoji(face.emotion);
       ctx.fillStyle = "#4CAF50";
       ctx.font = "bold 16px Arial";
-      ctx.fillText(`${emotionEmoji} ${capitalize(face.emotion)}`, scaledX, scaledY - 8);
+      ctx.fillText(`${emotionEmoji} ${getEmotionTranslation(face.emotion)}`, scaledX, scaledY - 8);
     }
   });
 
@@ -206,7 +206,7 @@ function drawWebcamFaceRectangles(faces, videoEl, canvas) {
       const emotionEmoji = getEmotionEmoji(face.emotion);
       ctx.fillStyle = "#4CAF50";
       ctx.font = "bold 16px Arial";
-      ctx.fillText(`${emotionEmoji} ${capitalize(face.emotion)}`, scaledX, scaledY - 8);
+      ctx.fillText(`${emotionEmoji} ${getEmotionTranslation(face.emotion)}`, scaledX, scaledY - 8);
     }
   });
 
@@ -260,7 +260,7 @@ function showPopup(faceData, mouseX, mouseY, popupId) {
   }
 
   popup.innerHTML = `
-    <h4>${emotionEmoji} ${capitalize(faceData.emotion)}</h4>
+    <h4>${emotionEmoji} ${getEmotionTranslation(faceData.emotion)}</h4>
     <p>Ishonch: ${(faceData.confidence * 100).toFixed(1)}%</p>
     <div class="emotion-bar">
       ${emotionBars}
